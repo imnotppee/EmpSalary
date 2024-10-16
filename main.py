@@ -8,8 +8,19 @@ create_comments_table()
 create_table()
 # Initialize the main application window
 app = ctk.CTk()
-center_window(app, 1000, 600)
+center_window(app, 1000, 640)
 app.title("Employee Salary Management")
+
+# Create frames for layout
+frame_left = ctk.CTkFrame(app, width=600, height=500)
+frame_left.grid(row=0, column=0, sticky="nsew")
+
+frame_right = ctk.CTkFrame(app, width=400, height=500)  # ประกาศ frame_right ตรงนี้
+frame_right.grid(row=0, column=1, sticky="nsew")
+
+# Configuration for window layout
+app.grid_columnconfigure(0, weight=1)
+app.grid_columnconfigure(1, weight=1)
 
 # Can't resize window
 app.resizable(False, False)
@@ -273,9 +284,9 @@ def view_comments_window():
 
         try:
             connection = psycopg2.connect(
-                dbname="postgres",  
+                dbname="postgres",
                 user="postgres",
-                password="1234",
+                password="AsPpeez1875",
                 host="localhost",
                 port="5432"
             )
@@ -310,6 +321,58 @@ def view_comments_window():
 
 # เชื่อมโยงปุ่ม View Comments
 btn_view_comments.configure(command=view_comments_window)
+
+# เพิ่ม Textbox ใน frame_right เพื่อแสดงข้อมูล
+employee_display = ctk.CTkTextbox(frame_right, width=380, height=480)
+employee_display.pack(padx=20, pady=20)
+
+# ฟังก์ชันสำหรับดึงข้อมูลพนักงานจากฐานข้อมูล
+def fetch_employee_data_for_display():
+    try:
+        connection = psycopg2.connect(
+            dbname="postgres",
+            user="postgres",
+            password="AsPpeez1875",
+            host="localhost",
+            port="5432"
+        )
+        cursor = connection.cursor()
+
+        # ดึงข้อมูลพนักงานทั้งหมดจากตาราง employees
+        fetch_query = """
+            SELECT employee_id,firstname, lastname, religion, nationality, dob, tel, email, department, position, salary 
+            FROM employees;
+        """
+        cursor.execute(fetch_query)
+        results = cursor.fetchall()
+
+        # ล้าง Textbox ก่อนที่จะใส่ข้อมูลใหม่
+        employee_display.delete(1.0, ctk.END)
+
+        if results:
+            # แสดงข้อมูลพนักงานแต่ละคน
+            for row in results:
+                employee_display.insert(ctk.END, f"ID: {row[0]}\n")
+                employee_display.insert(ctk.END, f"Name: {row[1]} {row[2]}\n")
+                employee_display.insert(ctk.END, f"Department: {row[3]}\n")
+                employee_display.insert(ctk.END, f"Position: {row[4]}\n")
+                employee_display.insert(ctk.END, f"Salary: {row[5]}\n")
+                employee_display.insert(ctk.END, "-"*30 + "\n")  # เส้นคั่นระหว่างพนักงานแต่ละคน
+        else:
+            employee_display.insert(ctk.END, "No employee data found.")
+
+    except Exception as e:
+        messagebox.showerror("Error", f"Failed to fetch employee data. Error: {e}")
+
+    finally:
+        if cursor:
+            cursor.close()
+        if connection:
+            connection.close()
+
+# เพิ่มปุ่มใน frame_left เพื่อดึงข้อมูลพนักงานและแสดงทางด้านขวา
+btn_show_employees = ctk.CTkButton(frame_left, text="Show Employees", command=fetch_employee_data_for_display)
+btn_show_employees.pack(pady=10)
 
 
 
@@ -379,6 +442,18 @@ btn_delete.configure(
 )
 
 btn_edit.configure(
+    fg_color=new_palette["button_bg"], 
+    hover_color=new_palette["highlight"], 
+    text_color=new_palette["button_fg"]
+)
+
+btn_view_comments.configure(
+    fg_color=new_palette["button_bg"], 
+    hover_color=new_palette["highlight"], 
+    text_color=new_palette["button_fg"]
+)
+
+btn_save.configure(
     fg_color=new_palette["button_bg"], 
     hover_color=new_palette["highlight"], 
     text_color=new_palette["button_fg"]

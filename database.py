@@ -32,9 +32,9 @@ def add_employees(entry_firstname, entry_lastname, entry_religion, entry_nationa
     # Database connection
     try:
         connection = psycopg2.connect(
-            dbname="postgres",  
+            dbname="postgres",
             user="postgres",
-            password="1234",
+            password="AsPpeez1875",
             host="localhost",
             port="5432"
         )
@@ -69,9 +69,9 @@ def add_employees(entry_firstname, entry_lastname, entry_religion, entry_nationa
 def check_database_connection():
     try:
         connection = psycopg2.connect(
-            dbname="postgres",  
+            dbname="postgres",
             user="postgres",
-            password="1234",
+            password="AsPpeez1875",
             host="localhost",
             port="5432"
         )
@@ -84,9 +84,9 @@ def check_database_connection():
 def create_comments_table():
     try:
         connection = psycopg2.connect(
-            dbname="postgres",  
+            dbname="postgres",
             user="postgres",
-            password="1234",
+            password="AsPpeez1875",
             host="localhost",
             port="5432"
         )
@@ -115,9 +115,9 @@ def create_comments_table():
 def create_table():
     try:
         connection = psycopg2.connect(
-            dbname="postgres",  
+            dbname="postgres",
             user="postgres",
-            password="1234",
+            password="AsPpeez1875",
             host="localhost",
             port="5432"
         )
@@ -182,9 +182,9 @@ def search_employee(search_entry):
 
     try:
         connection = psycopg2.connect(
-            dbname="postgres",  
+            dbname="postgres",
             user="postgres",
-            password="1234",
+            password="AsPpeez1875",
             host="localhost",
             port="5432"
         )
@@ -226,7 +226,7 @@ def fetch_employee_details(edit_id_entry, entry_firstname, entry_lastname, entry
         connection = psycopg2.connect(
             dbname="postgres",
             user="postgres",
-            password="1234",
+            password="AsPpeez1875",
             host="localhost",
             port="5432"
         )
@@ -303,7 +303,7 @@ def update_employee_details(edit_id_entry, entry_firstname, entry_lastname, entr
         connection = psycopg2.connect(
             dbname="postgres",
             user="postgres",
-            password="1234",
+            password="AsPpeez1875",
             host="localhost",
             port="5432"
         )
@@ -335,7 +335,7 @@ def delete_employee(employee_id):
         conn = psycopg2.connect(
             dbname="postgres",
             user="postgres",
-            password="1234",
+            password="AsPpeez1875",
             host="localhost",
             port="5432"                        
         )
@@ -356,7 +356,7 @@ def save_comment(employee_id, comment):
         conn = psycopg2.connect(
             dbname="postgres",
             user="postgres",
-            password="1234",
+            password="AsPpeez1875",
             host="localhost",
             port="5432"
         )
